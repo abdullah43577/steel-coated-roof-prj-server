@@ -1,4 +1,24 @@
 {
+  "name": "steel-coated-roof-prj-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc --watch",
+    "start": "nodemon dist/server.js",
+    "build": "npm install && tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abdullah43577/steel-coated-roof-prj-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abdullah43577/steel-coated-roof-prj-server/issues"
+  },
+  "homepage": "https://github.com/abdullah43577/steel-coated-roof-prj-server#readme",
+  "description": "",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
