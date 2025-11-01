@@ -1,18 +1,7 @@
 import { Sequelize } from "sequelize";
 const { POSTGRES_PASS, POSTGRES_USER, POSTGRES_DB, DATABASE_URL } = process.env;
 
-// export const sequelize = new Sequelize(`${POSTGRES_DB}`, `${POSTGRES_USER}`, `${POSTGRES_PASS}`, {
-//   host: "localhost",
-//   dialect: "postgres",
-//   port: 5432,
-//   logging: false,
-// });
-
-// `postgresql://postgres:${POSTGRES_PASS}@db.isdxyyyouhfxzpgvrxdg.supabase.co:5432/postgres`;
-
-const connection_string = DATABASE_URL as string;
-
-export const sequelize = new Sequelize(connection_string, {
+export const sequelize = new Sequelize(DATABASE_URL as string, {
   dialect: "postgres",
   logging: process.env.NODE_ENV === "development" ? console.log : false,
   dialectOptions: {
