@@ -3,6 +3,8 @@ import { handleErrors } from "../helper/handleErrors";
 import twilio from "twilio";
 import { contactFormSchema } from "../schema/schema";
 import SMSModel from "../models/SMSModel";
+import { generateEmailTemplate } from "../emails/emailTemplate";
+import { transportMail } from "../emails/resendConfig";
 
 const accountSid = process.env.TWILIO_ACCOUNT_SID as string;
 const authToken = process.env.TWILIO_AUTH_TOKEN as string;
@@ -39,7 +41,7 @@ const sendVerificationCode = async function (req: Request, res: Response) {
 
 const validateVerificationCode = async function (req: Request, res: Response) {
   try {
-    const { first_name, last_name, phone_no, email, address, city, cur_roof_type, roof_type_wanted, building_type, project_type, message, code } = contactFormSchema.parse(req.body);
+    const { first_name, last_name, phone_no, email, address, city, cur_roof_type, roof_type_wanted, building_type, project_type, project_details, code } = contactFormSchema.parse(req.body);
 
     // find sms schema to validate code
     const smsRecord = await SMSModel.findOne({ where: { code, phone_no } });
@@ -50,7 +52,17 @@ const validateVerificationCode = async function (req: Request, res: Response) {
       return res.status(400).json({ message: "❌ Verification code has expired!" });
     }
 
+    // generate email template
+    const emailHtml = generateEmailTemplate({ first_name, last_name, phone_no, email, address, city, cur_roof_type, roof_type_wanted, building_type, project_type, project_details });
+
     // send email with credentials to Ron
+    await transportMail({
+      email,
+      message: emailHtml,
+      subject: "New Roofing Project Contact Form Submission",
+    });
+
+    smsRecord.destroy(); // Invalidate the code after successful verification
 
     res.status(200).json({ message: "Form Submitted Successfully!" });
   } catch (error) {
