@@ -39,7 +39,7 @@ const sendVerificationCode = async function (req: Request, res: Response) {
 
 const validateVerificationCode = async function (req: Request, res: Response) {
   try {
-    const { first_name, last_name, phone_no, email, address, city, roof_type, project_type, message, code } = contactFormSchema.parse(req.body);
+    const { first_name, last_name, phone_no, email, address, city, cur_roof_type, roof_type_wanted, building_type, project_type, message, code } = contactFormSchema.parse(req.body);
 
     // find sms schema to validate code
     const smsRecord = await SMSModel.findOne({ where: { code, phone_no } });

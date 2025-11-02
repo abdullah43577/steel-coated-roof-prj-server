@@ -7,8 +7,10 @@ export const contactFormSchema = z.object({
   email: z.string().email("Invalid email address"),
   address: z.string().min(1, "Address is required"),
   city: z.string().min(1, "City is required"),
-  roof_type: z.string().min(1, "Roof type is required"),
+  roof_type_wanted: z.string().min(1, "Roof type is required"),
+  cur_roof_type: z.string().min(1, "Roof type is required"),
   project_type: z.string().min(1, "Project type is required"),
   message: z.string().optional(),
   code: z.string().min(6, "Verification code must be 6 digits"),
+  building_type: z.string().min(1, "Building type is required"),
 });
