@@ -12,7 +12,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", "https://stone-coated-steel-roofing-project.vercel.app"],
   })
 );
 app.use(express.json());
